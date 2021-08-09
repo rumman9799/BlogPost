@@ -81,7 +81,7 @@ exports.createProfilePostController = async (req, res, next) => {
             name,
             title,
             bio,
-            profilePics: req.user.profilePics,
+            //profilePics: req.user.profilePics,
             links: {
                 website: website || '',
                 facebook: facebook || '',
