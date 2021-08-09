@@ -24,7 +24,7 @@ const middleware = [
     }),
     express.json(),
     session({
-        secret: config.get('secret'),
+        secret: "secret" /* config.get('secret') */,
         resave: false,
         saveUninitialized: false,
         store: store
