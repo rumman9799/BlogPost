@@ -8,7 +8,7 @@ const setMiddleware = require('./middleware/middleware')
 const setRoutes = require('./routes/routes')
 
 
-const MONGODB_URI = `mongodb+srv://rumman:QYKGh14MJDRUcRIK@cluster0.e1ywht2.mongodb.net/?retryWrites=true&w=majority`
+const MONGODB_URI = `mongodb+srv://rumman:QYKGh14MJDRUcRIK@cluster0.e1ywht2.mongodb.net/`
 
 
 const app = express()
