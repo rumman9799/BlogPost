@@ -6,10 +6,18 @@ const chalk = require('chalk')
 
 const setMiddleware = require('./middleware/middleware')
 const setRoutes = require('./routes/routes')
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
+//const MONGODB_URI = `mongodb+srv://rumman:QYKGh14MJDRUcRIK@cluster0.e1ywht2.mongodb.net/`
+const uri = "mongodb+srv://rumman:QYKGh14MJDRUcRIK@cluster0.e1ywht2.mongodb.net/?retryWrites=true&w=majority";
 
-const MONGODB_URI = `mongodb+srv://rumman:QYKGh14MJDRUcRIK@cluster0.e1ywht2.mongodb.net/`
-
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
 const app = express()
 
@@ -39,16 +47,31 @@ app.use((error, req, res, next) => {
 })
 
 const PORT = process.env.PORT || 8080
-mongoose.connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => {
-        console.log(chalk.green('Database Connected'))
-        app.listen(PORT, () => {
-            console.log(chalk.green.inverse(`Server is running on PORT ${PORT}`))
-        })
-    })
-    .catch(e => {
-        return console.log(e)
-    })
+// mongoose.connect(MONGODB_URI, {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true
+//     })
+//     .then(() => {
+//         console.log(chalk.green('Database Connected'))
+//         app.listen(PORT, () => {
+//             console.log(chalk.green.inverse(`Server is running on PORT ${PORT}`))
+//         })
+//     })
+//     .catch(e => {
+//         return console.log(e)
+//     })
+
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
